@@ -1,6 +1,8 @@
 import cv2
 from ultralytics import YOLO
 from ultralytics.solutions import object_counter
+from collections import defaultdict
+
 
 # Inicializar la captura de video desde la cámara de la laptop
 cap = cv2.VideoCapture(0)
@@ -10,7 +12,8 @@ if not cap.isOpened():
     print("Error al abrir la cámara. Asegúrate de que esté correctamente conectada.")
     exit()
 
-
+names = model.model.names
+print(f"Clases: {names}")
 # Define region points
 region_points = [(20, 1000), (1080, 404), (1080, 360), (20, 360)]
 
@@ -21,7 +24,7 @@ counter.set_args(view_img=True,
                  classes_names=model.names,
                  draw_tracks=True)
 
-
+class_counts = defaultdict(int)
 # Bucle principal para capturar y mostrar el video en tiempo real
 while cap.isOpened():
     # Capturar un fotograma de la cámara
@@ -36,9 +39,9 @@ while cap.isOpened():
 
     # Contar y dibujar los objetos detectados en el fotogram
     frame = counter.start_counting(frame, tracks)
-
-    # Mostrar el fotograma con los objetos contados
-    cv2.imshow('Object Counting', frame)
+    in_count = counter.in_counts
+    out_count = counter.out_counts
+    print (f'IN: {in_count}  OUT: {out_count}')
 
     # Comprobar si se presiona la tecla 'q' para salir del bucle
     if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -47,3 +50,7 @@ while cap.isOpened():
 # Liberar la captura de video y cerrar todas las ventanas
 cap.release()
 cv2.destroyAllWindows()
+in_count = counter.in_counts
+out_count = counter.out_counts
+print (f'IN: {in_count}  OUT: {out_count}')
+cv2.imshow('Object Counting', frame)
