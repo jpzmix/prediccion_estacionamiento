@@ -53,4 +53,3 @@ cv2.destroyAllWindows()
 in_count = counter.in_counts
 out_count = counter.out_counts
 print (f'IN: {in_count}  OUT: {out_count}')
-cv2.imshow('Object Counting', frame)
