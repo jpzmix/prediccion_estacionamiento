@@ -37,13 +37,13 @@ for hour in range(24):
 hourly_counts_vector = hourly_counts['available_spaces'].to_numpy()
 
 
-# Crear el modelo de bosque aleatorio
+# Modelo
 modelo = RandomForestRegressor(n_estimators=100, random_state=42)
 X = np.arange(24).reshape(-1, 1)
-# Entrenar el modelo
+# Entrenamiento del modelo
 modelo.fit(X, hourly_counts_vector)
 
-# Hacer predicciones
+# Predicciones
 predicciones = modelo.predict(X)
 
 # Redondear las predicciones hacia abajo y convertirlas a enteros
