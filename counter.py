@@ -42,7 +42,7 @@ def interrupt_handler(event):
     conn.commit()
     conn.close()
 
-# Inicializar la captura de video desde la cámara de la laptop
+# Inicializar la captura de video desde la cámara.
 cap = cv2.VideoCapture(0)
 model = YOLO("best.pt")
 # Verificar si la cámara se abrió correctamente
